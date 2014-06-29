@@ -1,17 +1,17 @@
 //size of matrix
-const char MATRIX_SIZE = 4;
+const byte MATRIX_SIZE = 4;
 //how long should one led be active in ms
-const char LIGHT_ON_TIME = 1;
+const byte LIGHT_ON_TIME = 1;
 
 //helper 
-char i;
-char j;
-char k;
-char l;
+byte i;
+byte j;
+byte k;
+byte l;
 
 //mapping of pins to colums and rows
-char colsCathode[MATRIX_SIZE] = { 2, 3, 4, 5 };
-char rowsAnode[MATRIX_SIZE] = { 10, 11, 12, 13 };
+byte colsCathode[MATRIX_SIZE] = { 2, 3, 4, 5 };
+byte rowsAnode[MATRIX_SIZE] = { 10, 11, 12, 13 };
 
 //led matrix model with on or off status
 bool ledArray[MATRIX_SIZE][MATRIX_SIZE];
