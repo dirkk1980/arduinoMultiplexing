@@ -1,69 +1,56 @@
-short i;
-short j;
-short k;
-short l;
-short colsCathode[4] = { 2, 3, 4, 5 };
-short rowsAnode[4] = { 10, 11, 12, 13 };
-bool ledArray[4][4] = { { false, false, false, false }, { false, false, false, false } };
-const short MATRIX_SIZE = 4;
-const short UPDATE_CYLCE_MS = 2;
+//size of matrix
+const char MATRIX_SIZE = 4;
+//how long should one led be active in ms
+const char LIGHT_ON_TIME = 1;
+
+//helper 
+char i;
+char j;
+char k;
+char l;
+
+//mapping of pins to colums and rows
+char colsCathode[MATRIX_SIZE] = { 2, 3, 4, 5 };
+char rowsAnode[MATRIX_SIZE] = { 10, 11, 12, 13 };
+
+//led matrix model with on or off status
+bool ledArray[MATRIX_SIZE][MATRIX_SIZE];
 
 void setup()
 {
-
-	pinMode(13, OUTPUT);
-	pinMode(12, OUTPUT);
-	pinMode(11, OUTPUT);
-	pinMode(10, OUTPUT);
-
-	pinMode(5, OUTPUT);
-	pinMode(4, OUTPUT);
-	pinMode(3, OUTPUT);
-	pinMode(2, OUTPUT);
-
-	ledOn(0,0);
-	ledOn(1, 1);
-	ledOn(2, 2); 
-	ledOn(3, 3);
-
-}
-
-void loop()
-{
-	updateLeds();	
-}
-
-void ledOn(short xCoord, short yCoord)
-{
-	ledArray[xCoord][yCoord] = true;
-}
-
-void setPinsForLed(short xCoord, short yCoord)
-{
-	//clearAllPins();
+	//anodes
 	for (i = 0; i < MATRIX_SIZE; i++)
 	{
-		if (xCoord == i)
+		pinMode(rowsAnode[i], OUTPUT);
+	}
+
+
+	//cathodes
+	for (i = 0; i < MATRIX_SIZE; i++)
+	{
+		pinMode(colsCathode[i], OUTPUT);
+	}
+
+	//all leds on
+	for (k = 0; k < MATRIX_SIZE; k++)
+	{
+		for (l = 0; l < MATRIX_SIZE; l++)
 		{
-			digitalWrite(colsCathode[i], LOW);
-		}
-		else
-		{
-			digitalWrite(colsCathode[i], HIGH);
-		}
-		if (yCoord == i)
-		{
-			digitalWrite(rowsAnode[i], HIGH);
-		}
-		else
-		{
-			digitalWrite(rowsAnode[i], LOW);
+			ledOn(k, l);
 		}
 	}
 }
 
-void updateLeds()
+//arduino loop function
+void loop()
 {
+	showLedFrame();
+}
+
+//show actual frame of active leds (like a rendered frame in video games)
+void showLedFrame()
+{
+	clearAllPins();
 	for (k = 0; k < MATRIX_SIZE; k++)
 	{
 		for (l = 0; l < MATRIX_SIZE; l++)
@@ -71,8 +58,44 @@ void updateLeds()
 			if (ledArray[k][l] == true)
 			{
 				setPinsForLed(k, l);
-				delay(UPDATE_CYLCE_MS);
+				//set the delay, how long one led should be visible
+				delay(LIGHT_ON_TIME);
 			}
 		}
 	}
+}
+
+// turn all leds off
+void clearAllPins()
+{
+
+	for (i = 0; i < MATRIX_SIZE; i++)
+	{
+		digitalWrite(colsCathode[i], HIGH);
+		digitalWrite(rowsAnode[i], LOW);
+
+	}
+}
+
+//set pins of column and row to activate one led
+void setPinsForLed(short xCoord, short yCoord)
+{
+
+	for (i = 0; i < MATRIX_SIZE; i++)
+	{
+		if (xCoord == i)
+		{
+			digitalWrite(colsCathode[i], LOW);
+		}
+		if (yCoord == i)
+		{
+			digitalWrite(rowsAnode[i], HIGH);
+		}
+	}
+}
+
+//set one led in model to on status
+void ledOn(short xCoord, short yCoord)
+{
+	ledArray[xCoord][yCoord] = true;
 }
