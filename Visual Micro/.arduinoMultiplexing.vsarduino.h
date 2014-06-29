@@ -41,6 +41,8 @@ extern "C" void __cxa_pure_virtual() {;}
 
 //
 //
+void ledOn(short xCoord, short yCoord);
+void setPinsForLed(short xCoord, short yCoord);
 
 #include "C:\development\ide\arduino-1.0.5-r2\hardware\arduino\cores\arduino\arduino.h"
 #include "C:\development\ide\arduino-1.0.5-r2\hardware\arduino\variants\standard\pins_arduino.h" 
