@@ -2,8 +2,8 @@ short i;
 short j;
 short k;
 short l;
-short cols[2] = { 10, 11 };
-short rows[2] = { 13, 12 };
+short cols[2] = { 12, 13 };
+short rows[2] = { 10, 11 };
 bool ledArray[2][2] = { { false, false }, { false, false } };
 const short MATRIX_SIZE = 2;
 
@@ -18,8 +18,6 @@ void setup()
 	digitalWrite(9, HIGH);
 
 	ledOn(0, 0);
-	ledOn(0, 1);
-	ledOn(1, 0);
 	ledOn(1, 1);
 
 }
